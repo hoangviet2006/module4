@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout/layout::libary}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout/layout::header}"></th:block>
+<a href="/human/create">Thêm Mới</a>
+<form action="/human/search" method="post" class="d-flex" >
+    <label>Tìm kiếm</label>
+    <input class="form-control me-2" name="name" th:value="${param.name}" >
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+<h1> Danh Sách Người Dùng</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Địa chỉ</th>
+        <th>Chi tiết</th>
+    </tr>
+    <tr th:each="human:${human}">
+        <td th:text="${human.id}"></td>
+        <td th:text="${human.name}"></td>
+        <td th:text="${human.address}"></td>
+<!--        <td> <a th:href="@{human/detail(human.id)}">Chi tiết</a></td>  // requestParam-->
+        <td> <a th:href="@{/human/detail/__${human.id}__}">Chi tiết</a></td>    <!--PathVariable-->
+    </tr>
+</table>
+</body>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
+</html>

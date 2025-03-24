@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Chi tiết</h1>
+ID: <span th:text="${detail.id}"></span><br>
+Tên: <span th:text="${detail.name}"></span><br>
+Địa chỉ: <span th:text="${detail.address}"></span><br>
+Ngày sinh: <span th:text="${detail.date}"></span><br>
+Giới tính: <span th:text="${detail.gender}"></span><br>
+Số điện thoại: <span th:text="${detail.phoneNumber}"></span><br>
+Quốc tịch: <span th:text="${detail.nationality}"></span><br>
+Việc làm: <span th:text="${detail.job}"></span><br>
+<a th:href="@{/human/update(id=${detail.id})}"> Chỉnh sửa</a>
+</body>
+</html>

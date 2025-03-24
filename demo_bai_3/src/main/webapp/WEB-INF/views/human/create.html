@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Thêm mới</h1>
+<form action="/human/create" method="post" th:object="${human}">
+    <input type="hidden" th:field="*{id}">
+    <label>Nhập tên</label> <br>
+    <input type="text" th:field="*{name}"><br>
+    <label>Nhập địa chỉ</label><br>
+    <input type="text" th:field="*{address}"><br>
+    <label>Nhập ngày sinh</label><br>
+    <input type="date" th:field="*{date}"><br>
+    <label>Nhập giới tính</label><br>
+    <select  th:field="*{gender}"><br>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select><br>
+    <label>Nhập số điện thoại</label><br>
+    <input type="text" th:field="*{phoneNumber}"><br>
+    <label>Nhập Quốc tịch</label><br>
+    <input type="text" th:field="*{nationality}"><br>
+    <label>Nhập Việc làm</label><br>
+    <input type="text" th:field="*{job}"><br>
+    <button>Lưu</button>
+</form>
+</body>
+</html>

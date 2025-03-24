@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Chỉnh sửa</h1>
+<form action="/human/update" method="post" th:object="${findHuman}">
+    <input type="hidden" th:field="*{id}" >
+    <label> Tên</label> <br>
+    <input th:field="*{name}" ><br>
+    <label> địa chỉ</label><br>
+    <input type="text" th:field="*{address}"><br>
+    <label> ngày sinh</label><br>
+    <input type="date" th:field="*{date}"><br>
+    <label> giới tính</label><br>
+    <select  th:field="*{gender}"><br>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select><br>
+    <label> số điện thoại</label><br>
+    <input type="text" th:field="*{phoneNumber}"><br>
+    <label> Quốc tịch</label><br>
+    <input type="text" th:field="*{nationality}"><br>
+    <label> Việc làm</label><br>
+    <input type="text" th:field="*{job}"><br>
+    <button>Lưu</button>
+</form>
+</body>
+</html>
