@@ -3,29 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:replace="~{layout/layout::libary}"></th:block>
+    <style>
+        /* From Uiverse.io by cssbuttons-io */
+        button {
+            --color: #560bad;
+            font-family: inherit;
+            display: inline-block;
+            width: 8em;
+            height: 2.6em;
+            line-height: 2.5em;
+            margin: 20px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid var(--color);
+            transition: color 0.5s;
+            z-index: 1;
+            font-size: 17px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--color);
+        }
+
+        button:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: var(--color);
+            height: 150px;
+            width: 200px;
+            border-radius: 50%;
+        }
+
+        button:hover {
+            color: #fff;
+        }
+
+        button:before {
+            top: 100%;
+            left: 100%;
+            transition: all 0.7s;
+        }
+
+        button:hover:before {
+            top: -30px;
+            left: -30px;
+        }
+
+        button:active:before {
+            background: #3a0ca3;
+            transition: background 0s;
+        }
+
+    </style>
 </head>
-<body>
+<th:block th:replace="~{layout/layout::header}"></th:block>
 <h1>Chỉnh sửa</h1>
-<form action="/human/update" method="post" th:object="${findHuman}">
-    <input type="hidden" th:field="*{id}" >
-    <label> Tên</label> <br>
-    <input th:field="*{name}" ><br>
-    <label> địa chỉ</label><br>
-    <input type="text" th:field="*{address}"><br>
-    <label> ngày sinh</label><br>
-    <input type="date" th:field="*{date}"><br>
-    <label> giới tính</label><br>
-    <select  th:field="*{gender}"><br>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-    </select><br>
-    <label> số điện thoại</label><br>
-    <input type="text" th:field="*{phoneNumber}"><br>
-    <label> Quốc tịch</label><br>
-    <input type="text" th:field="*{nationality}"><br>
-    <label> Việc làm</label><br>
-    <input type="text" th:field="*{job}"><br>
-    <button>Lưu</button>
-</form>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h1 class="text-center text-primary mb-4">Chỉnh sửa</h1>
+
+        <form action="/human/update" method="post" th:object="${findHuman}">
+            <input type="hidden" th:field="*{id}">
+            <div class="mb-3">
+                <label class="form-label">Nhập tên</label>
+                <input type="text" class="form-control" th:field="*{name}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập địa chỉ</label>
+                <input type="text" class="form-control" th:field="*{address}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập ngày sinh</label>
+                <input type="date" class="form-control" th:field="*{date}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập giới tính</label>
+                <select  class="form-select" th:field="*{gender}">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập số điện thoại</label>
+                <input type="text" class="form-control" th:field="*{phoneNumber}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập Quốc tịch</label>
+                <input type="text" class="form-control" th:field="*{nationality}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập Việc làm</label>
+                <input type="text" class="form-control" th:field="*{job}">
+            </div>
+            <div class="text-center">
+                <button >Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
 </html>

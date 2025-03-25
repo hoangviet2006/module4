@@ -4,29 +4,168 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <th:block th:replace="~{layout/layout::libary}"></th:block>
-</head>
+    <style>
+        /* Căn bảng vào giữa màn hình */
+        .table-container {
+            width: 80%;
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Bo tròn các góc bảng và xóa đường kẻ giữa các cột */
+        table {
+            width: 100%;
+            border-collapse: separate; /* Không gộp đường viền */
+            border-spacing: 0; /* Loại bỏ khoảng cách giữa các ô */
+            border-radius: 15px; /* Bo tròn bảng */
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid black; /* Đường viền ngoài của bảng */
+        }
+
+        /* Bo tròn góc của bảng */
+        th:first-child {
+            border-top-left-radius: 15px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 15px;
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 15px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 15px;
+        }
+
+        /* Định dạng tiêu đề bảng */
+        th {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        /* Xóa đường kẻ giữa các ô */
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: none; /* Loại bỏ viền giữa các ô */
+        }
+
+        /* Hiệu ứng hover */
+        tr:hover {
+            background-color: rgba(0, 0, 255, 0.2);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Định dạng nút */
+        .btn {
+            border-radius: 10px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center; /* Căn giữa theo chiều dọc */
+            gap: 10px; /* Tạo khoảng cách giữa các phần tử */
+        }
+        .search-container {
+            display: flex;
+            justify-content: space-between; /* Đẩy phần tử hai bên ra xa nhau */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            width: 100%; /* Đảm bảo phần tử chiếm hết chiều rộng */
+        }
+
+        /* From Uiverse.io by cssbuttons-io */
+        button {
+            --color: #560bad;
+            font-family: inherit;
+            display: inline-block;
+            width: 8em;
+            height: 2.6em;
+            line-height: 2.5em;
+            margin: 20px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid var(--color);
+            transition: color 0.5s;
+            z-index: 1;
+            font-size: 17px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--color);
+        }
+
+        button:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: var(--color);
+            height: 150px;
+            width: 200px;
+            border-radius: 50%;
+        }
+
+        button:hover {
+            color: #fff;
+        }
+
+        button:before {
+            top: 100%;
+            left: 100%;
+            transition: all 0.7s;
+        }
+
+        button:hover:before {
+            top: -30px;
+            left: -30px;
+        }
+
+        button:active:before {
+            background: #3a0ca3;
+            transition: background 0s;
+        }
+        .user-img {
+            width: 50px; /* Điều chỉnh chiều rộng ảnh */
+            height: 50px; /* Điều chỉnh chiều cao ảnh */
+            object-fit: cover; /* Đảm bảo ảnh không bị méo */
+            border-radius: 50%; /* Làm tròn góc ảnh */
+            border: 2px solid #007bff; /* Viền ảnh */
+        }
+    </style>
+    </head>
 <body>
 <th:block th:replace="~{layout/layout::header}"></th:block>
-<a href="/human/create">Thêm Mới</a>
-<form action="/human/search" method="post" class="d-flex" >
-    <label>Tìm kiếm</label>
-    <input class="form-control me-2" name="name" th:value="${param.name}" >
-    <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
-<h1> Danh Sách Người Dùng</h1>
+<h1 style="text-align: center"> Danh Sách Người Dùng</h1>
+<div class="search-container">
+    <button><a href="/human/create" >Thêm Mới</a></button>
+    <form action="/human/search" method="post" class="d-flex" >
+        <input class="form-control me-2" style="width: 150px" name="name" th:value="${param.name}" >
+        <button type="submit">Search</button>
+    </form>
+</div>
 <table>
     <tr>
         <th>ID</th>
         <th>Tên</th>
         <th>Địa chỉ</th>
+        <th>Ảnh minh họa</th>
         <th>Chi tiết</th>
     </tr>
     <tr th:each="human:${human}">
         <td th:text="${human.id}"></td>
         <td th:text="${human.name}"></td>
         <td th:text="${human.address}"></td>
+        <td>
+            <img th:src="${human.urlImg}" alt="User Image" class="user-img">
+        </td>
 <!--        <td> <a th:href="@{human/detail(human.id)}">Chi tiết</a></td>  // requestParam-->
-        <td> <a th:href="@{/human/detail/__${human.id}__}">Chi tiết</a></td>    <!--PathVariable-->
+        <td> <button> <a th:href="@{/human/detail/__${human.id}__}">Chi tiết</a></button></td>    <!--PathVariable-->
     </tr>
 </table>
 </body>

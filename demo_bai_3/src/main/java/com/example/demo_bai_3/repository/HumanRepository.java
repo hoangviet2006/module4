@@ -10,9 +10,9 @@ import java.util.List;
 public class HumanRepository implements IHumanRepository {
     private static List<Human> humanList = new ArrayList<>();
     static {
-        humanList.add(new Human(1,"Việt","2006-03-30","nam","0123456789","Huế","Học sinh","Việt Nam"));
-        humanList.add(new Human(2,"Đạt","1998-02-28","nam","0987456123","Nghệ An","Làm Onl","Việt Nam"));
-        humanList.add(new Human(3,"Quốc","2000-02-28","nam","0147252839","Đà Nẵng","Thất Nghiệp","Việt Nam"));
+        humanList.add(new Human(1,"Việt","2006-03-30","nam","0123456789","Huế","Học sinh","Việt Nam","https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"));
+        humanList.add(new Human(2,"Đạt","1998-02-28","nam","0987456123","Nghệ An","Làm Onl","Việt Nam","https://images.pexels.com/photos/1183099/pexels-photo-1183099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"));
+        humanList.add(new Human(3,"Quốc","2000-02-28","nam","0147252839","Đà Nẵng","Thất Nghiệp","Việt Nam","https://images.pexels.com/photos/24449015/pexels-photo-24449015/free-photo-of-view-of-mountains.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"));
     }
     @Override
     public List<Human> getHuman() {

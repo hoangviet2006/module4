@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:replace="~{layout/layout::libary}"></th:block>
 </head>
 <body>
+<th:block th:replace="~{layout/layout::header}"></th:block>
 <h1>Chi tiết</h1>
-ID: <span th:text="${detail.id}"></span><br>
-Tên: <span th:text="${detail.name}"></span><br>
-Địa chỉ: <span th:text="${detail.address}"></span><br>
-Ngày sinh: <span th:text="${detail.date}"></span><br>
-Giới tính: <span th:text="${detail.gender}"></span><br>
-Số điện thoại: <span th:text="${detail.phoneNumber}"></span><br>
-Quốc tịch: <span th:text="${detail.nationality}"></span><br>
-Việc làm: <span th:text="${detail.job}"></span><br>
-<a th:href="@{/human/update(id=${detail.id})}"> Chỉnh sửa</a>
+<p><strong>ID:</strong> <span th:text="${detail.id}"></span></p>
+<p><strong>Tên:</strong> <span th:text="${detail.name}"></span></p>
+<p><strong>Địa chỉ:</strong> <span th:text="${detail.address}"></span></p>
+<p><strong>Ngày sinh:</strong> <span th:text="${detail.date}"></span></p>
+<p><strong>Giới tính:</strong> <span th:text="${detail.gender}"></span></p>
+<p><strong>Số điện thoại:</strong> <span th:text="${detail.phoneNumber}"></span></p>
+<p><strong>Quốc tịch:</strong> <span th:text="${detail.nationality}"></span></p>
+<p><strong>Việc làm:</strong> <span th:text="${detail.job}"></span></p>
+<a class="btn btn-outline-success" th:href="@{/human/update(id=${detail.id})}"> Chỉnh sửa</a>
 </body>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
 </html>

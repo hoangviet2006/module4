@@ -17,19 +17,29 @@ public class Human {
     private String nationality;
 
     private String job;
+    private String urlImg;
 
     public Human() {
     }
 
-    public Human(int id, String name, String date, String gender, String phoneNumber, String address, String job, String nationality) {
+    public Human(int id, String name, String address, String date, String gender, String phoneNumber, String nationality, String job, String urlImg) {
         this.id = id;
         this.name = name;
+        this.address = address;
         this.date = date;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.job = job;
         this.nationality = nationality;
+        this.job = job;
+        this.urlImg = urlImg;
+    }
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
     }
 
     public String getDate() {

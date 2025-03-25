@@ -3,29 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:replace="~{layout/layout::libary}"></th:block>
+    <style>
+        /* From Uiverse.io by cssbuttons-io */
+        button {
+            --color: #560bad;
+            font-family: inherit;
+            display: inline-block;
+            width: 8em;
+            height: 2.6em;
+            line-height: 2.5em;
+            margin: 20px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid var(--color);
+            transition: color 0.5s;
+            z-index: 1;
+            font-size: 17px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--color);
+        }
+
+        button:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: var(--color);
+            height: 150px;
+            width: 200px;
+            border-radius: 50%;
+        }
+
+        button:hover {
+            color: #fff;
+        }
+
+        button:before {
+            top: 100%;
+            left: 100%;
+            transition: all 0.7s;
+        }
+
+        button:hover:before {
+            top: -30px;
+            left: -30px;
+        }
+
+        button:active:before {
+            background: #3a0ca3;
+            transition: background 0s;
+        }
+
+    </style>
 </head>
-<body>
-<h1>Thêm mới</h1>
-<form action="/human/create" method="post" th:object="${human}">
-    <input type="hidden" th:field="*{id}">
-    <label>Nhập tên</label> <br>
-    <input type="text" th:field="*{name}"><br>
-    <label>Nhập địa chỉ</label><br>
-    <input type="text" th:field="*{address}"><br>
-    <label>Nhập ngày sinh</label><br>
-    <input type="date" th:field="*{date}"><br>
-    <label>Nhập giới tính</label><br>
-    <select  th:field="*{gender}"><br>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-    </select><br>
-    <label>Nhập số điện thoại</label><br>
-    <input type="text" th:field="*{phoneNumber}"><br>
-    <label>Nhập Quốc tịch</label><br>
-    <input type="text" th:field="*{nationality}"><br>
-    <label>Nhập Việc làm</label><br>
-    <input type="text" th:field="*{job}"><br>
-    <button>Lưu</button>
-</form>
+<th:block th:replace="~{layout/layout::header}"></th:block>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h1 class="text-center text-primary mb-4">Thêm mới</h1>
+
+        <form action="/human/create" method="post" th:object="${human}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}">
+            <div class="mb-3">
+                <label class="form-label">Nhập tên</label>
+                <input type="text" class="form-control" th:field="*{name}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập địa chỉ</label>
+                <input type="text" class="form-control" th:field="*{address}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập ngày sinh</label>
+                <input type="date" class="form-control" th:field="*{date}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập giới tính</label>
+                <select  class="form-select" th:field="*{gender}">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập số điện thoại</label>
+                <input type="text" class="form-control" th:field="*{phoneNumber}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập Quốc tịch</label>
+                <input type="text" class="form-control" th:field="*{nationality}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nhập Việc làm</label>
+                <input type="text" class="form-control" th:field="*{job}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Upload Ảnh</label>
+                <input class="form-control" id="imageUpload" type="file" name="file" accept="image/*" required>
+                <img id="imagePreview" src="#" alt="Ảnh preview" class="mt-3" style="max-width: 200px; display: none;">
+            </div>
+            <div class="text-center">
+                <button>Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("imageUpload").addEventListener("change", function(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById("imagePreview");
+            preview.src = reader.result;
+            preview.style.display = "block";
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
 </body>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
 </html>
