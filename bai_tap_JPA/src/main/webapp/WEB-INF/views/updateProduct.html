@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/product/update" method="post" th:object="${findId}">
+    <p><strong>ID: </strong><input  type="hidden" th:field="*{id}"></p>
+    <p><strong>Tên: </strong><input th:field="*{name}"></p>
+    <p><strong>Giá: </strong><input th:field="*{price}"></p>
+    <p><strong>Số Lượng: </strong><input th:field="*{quantity}"></p>
+    <button>Chỉnh Sửa</button>
+</form>
+</body>
+</html>

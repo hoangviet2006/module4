@@ -43,8 +43,6 @@
                 redirectAttributes.addFlashAttribute("error", "Lỗi khi upload ảnh: " + e.getMessage());
                 return "redirect:/human/create";
             }
-
-
             int id = humanService.getHuman().size() + 1;
             human.setId(id);
             humanService.createHuman(human);
