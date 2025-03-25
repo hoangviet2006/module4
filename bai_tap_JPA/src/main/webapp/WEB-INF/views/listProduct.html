@@ -7,7 +7,7 @@
 <body>
 <a href="/product/create" class="btn-btn-primary">Thêm Mới</a>
 <form action="/product/search" method="post">
-    <input name="name" >
+    <input name="name" th:value="${param.name}">
     <button>Tìm kiếm</button>
 </form>
 <table>

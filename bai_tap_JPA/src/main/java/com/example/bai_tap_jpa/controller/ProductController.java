@@ -1,4 +1,4 @@
-package com.example.bai_tap_jpa.controller.controller;
+package com.example.bai_tap_jpa.controller;
 
 import com.example.bai_tap_jpa.model.Product;
 import com.example.bai_tap_jpa.service.IProductService;
