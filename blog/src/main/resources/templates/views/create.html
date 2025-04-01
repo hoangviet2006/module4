@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sách</title>
+</head>
+<body>
+<form th:action="@{/blog/create}" method="post" th:object="${blogDto}">
+    <input type="hidden" th:field="*{idBlog}">
+
+    <label>Mã sách:</label>
+    <input th:field="*{code}" placeholder="Nhập Mã Sách" required>
+    <small th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color:red"></small>
+
+    <label>Tên sách:</label>
+    <input th:field="*{nameBlog}" placeholder="Nhập tên sách" required>
+    <small th:if="${#fields.hasErrors('nameBlog')}" th:errors="*{nameBlog}" style="color:red"></small>
+
+    <label>Thể loại:</label>
+    <input th:field="*{genre}" placeholder="Nhập thể loại sách" required>
+    <small th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" style="color:red"></small>
+
+    <label>Số lượng:</label>
+    <input type="number" th:field="*{quantity}" placeholder="Nhập số lượng" min="1" required>
+    <small th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" style="color:red"></small>
+
+    <label>Tên tác giả:</label>
+    <input th:field="*{nameAuthor}" placeholder="Nhập tên tác giả" required>
+    <small th:if="${#fields.hasErrors('nameAuthor')}" th:errors="*{nameAuthor}" style="color:red"></small>
+
+    <label>Ngày sinh tác giả:</label>
+    <input type="date" th:field="*{birthDate}" required>
+    <small th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" style="color:red"></small>
+
+    <button type="submit">Lưu</button>
+</form>
+</body>
+</html>

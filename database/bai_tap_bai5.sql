@@ -11,4 +11,3 @@ insert into product(`name`,price,quantity) value("quần",20000,3);
 insert into product(`name`,price,quantity) value("giày",20000,3);
 insert into product(`name`,price,quantity) value("m",20000,3);
 insert into product(`name`,price,quantity) value("giày",20000,3);
-select*from product;

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/blog/update}" method="post" th:object="${findBlog}">
+    <input type="hidden" th:field="*{id}">
+    <input th:field="*{code}" placeholder="Nhập Mã Sách">
+    <input th:field="*{name}" placeholder="Nhập tên sách">
+    <input th:field="*{genre}" placeholder="Nhập thể loại sách">
+    <input th:field="*{quantity}" placeholder="Nhập số lượng">
+    <select th:field="*{idAuthor.id}">
+        <option th:each="authors:${author}" th:value="${authors.id}" th:text="${authors.nameAuthor}"></option>
+    </select>
+    <button>Lưu</button>
+</form>
+</body>
+</html>

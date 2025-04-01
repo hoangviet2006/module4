@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{layout/layout::libary}"></th:block>
+    <style>
+        .user-img {
+            width: 50px; /* Điều chỉnh chiều rộng ảnh */
+            height: 50px; /* Điều chỉnh chiều cao ảnh */
+            object-fit: cover; /* Đảm bảo ảnh không bị méo */
+            border-radius: 50%; /* Làm tròn góc ảnh */
+            border: 2px solid #007bff; /* Viền ảnh */
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{layout/layout::header}"></th:block>
+<h1>Chi tiết</h1>
+<p><strong>ID:</strong> <span th:text="${detail.id}"></span></p>
+<p><strong>Tên:</strong> <span th:text="${detail.name}"></span></p>
+<p><strong>Địa chỉ:</strong> <span th:text="${detail.address}"></span></p>
+<p><strong>Ngày sinh:</strong> <span th:text="${detail.date}"></span></p>
+<p><strong>Giới tính:</strong> <span th:text="${detail.gender}"></span></p>
+<p><strong>Số điện thoại:</strong> <span th:text="${detail.phoneNumber}"></span></p>
+<p><strong>Quốc tịch:</strong> <span th:text="${detail.nationality}"></span></p>
+<p><strong>Việc làm:</strong> <span th:text="${detail.job}"></span></p>
+<span><img th:src="${detail.urlImg}" alt="User Image" class="user-img"></span><br>
+<a class="btn btn-outline-success" th:href="@{/human/update(id=${detail.id})}"> Chỉnh sửa</a>
+</body>
+<th:block th:replace="~{layout/layout::footer}"></th:block>
+</html>
