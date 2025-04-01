@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Định dạng ảnh xem trước */
+        #imagePreview {
+            display: none; /* Ẩn ảnh trước khi chọn */
+            width: 150px; /* Đặt chiều rộng ảnh */
+            height: 150px; /* Đặt chiều cao ảnh */
+            object-fit: cover; /* Cắt ảnh để vừa khung */
+            border-radius: 8px; /* Bo góc ảnh */
+            margin-top: 10px;
+            border: 1px solid #ddd; /* Viền nhẹ */
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/product/create}" method="post" th:object="${create}" enctype="multipart/form-data">
+    <input th:field="*{id}" type="hidden">
+    <input th:field="*{code}" placeholder="Nhập mã sản phẩm">
+    <input th:field="*{name}" placeholder="Nhập tên sản phẩm">
+    <div>
+        <input name="file" id="imageUpload" type="file" accept="image/*" required>
+        <img class="user-img" id="imagePreview">
+    </div>
+    <input th:field="*{price}" placeholder="giá sản phẩm">
+    <input th:field="*{quantity}" placeholder=" Số lượng sản phẩm hiện có">
+    <button>Thêm mới</button>
+</form>
+</body>
+<script>
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const preview = document.getElementById("imagePreview");
+            preview.src = reader.result;
+            preview.style.display = "block";
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+</html>
