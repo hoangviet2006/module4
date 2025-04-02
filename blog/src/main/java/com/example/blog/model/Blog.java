@@ -18,8 +18,8 @@ public class Blog {
     private long id;
     @Column(name = "code" ,unique = true, nullable = false)
     private String code;
-    @Column(name = "name" , nullable = false)
-    private String name;
+    @Column(name = "name_blog" , nullable = false)
+    private String nameBlog;
     @Column(name = "genre", nullable = false)
     private String genre;
     @Column(name = "quantity", nullable = false)

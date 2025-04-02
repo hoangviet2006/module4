@@ -40,11 +40,11 @@ public class BlogService implements IBlogService {
         }
         Blog blog = new Blog();
         blog.setCode(blogDto.getCode());
-        blog.setName(blogDto.getNameBlog());
+        blog.setNameBlog(blogDto.getNameBlog());
         blog.setGenre(blogDto.getGenre());
         blog.setQuantity(blogDto.getQuantity());
         blog.setIdAuthor(author);
-        if (blog.getName().equals("Hoang Viet")){
+        if (blog.getNameBlog().equals("Hoang Viet")){
             try {
                 throw new NameException("Tên trùng với admin");
             } catch (NameException e) {
@@ -59,7 +59,7 @@ public class BlogService implements IBlogService {
         Blog updateBlog = blogRepository.findBlogsById(id);
         if (updateBlog != null) {
             updateBlog.setCode(blog.getCode());
-            updateBlog.setName(blog.getName());
+            updateBlog.setNameBlog(blog.getNameBlog());
             updateBlog.setGenre(blog.getGenre());
             updateBlog.setQuantity(blog.getQuantity());
             updateBlog.setIdAuthor(blog.getIdAuthor());
@@ -86,7 +86,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public Page<Blog> searchBlogByName(String name, Pageable pageable) {
-        return blogRepository.findByNameContaining(name, pageable);
+        return blogRepository.findByNameBlogContainingIgnoreCaseAndDeletedFalse(name, pageable);
     }
 
 }

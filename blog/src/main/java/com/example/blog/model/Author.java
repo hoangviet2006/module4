@@ -1,5 +1,6 @@
 package com.example.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Author {
     private String nameAuthor;
     @Column(name = "birth_day" , nullable = false)
     private Date birthDate;
+    @JsonIgnore
     @OneToMany(mappedBy = "idAuthor")
     private List<Blog> idBlog;
 }

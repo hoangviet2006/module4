@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface IBlogRepository extends JpaRepository<Blog,Integer> {
     Blog findBlogsById(long id);
-    Page<Blog> findByNameContaining(String name, Pageable pageable);
+    Page<Blog> findByNameBlogContainingIgnoreCaseAndDeletedFalse (String name,Pageable pageable);
 
 }

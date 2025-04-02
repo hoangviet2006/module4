@@ -38,5 +38,5 @@ public class BlogDto {
     @Past(message = "Ngày sinh phải là ngày trong quá khứ")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
-    private long idAuthor;
+    private Author idAuthor;
 }

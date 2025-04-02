@@ -49,11 +49,7 @@ public class BlogController {
 
     @PostMapping("/create")
     public String createBlog(@ModelAttribute BlogDto blog) {
-//        Author author = authorService.findAuthor(blog.getIdAuthor());
-//        blog.setIdAuthor(author.getId());
         blogService.addBlog(blog);
-//        blog.setIdAuthor(author);
-//      blogService.addBlog(blog);
         return "redirect:/blog";
     }
 
