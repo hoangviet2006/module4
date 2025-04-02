@@ -5,6 +5,7 @@ import com.example.blog.model.Author;
 import com.example.blog.model.Blog;
 import com.example.blog.repository.IAuthorRepository;
 import com.example.blog.repository.IBlogRepository;
+import com.example.blog.service.IBlogService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +18,13 @@ import java.util.List;
 @RequestMapping("/api/blogs")
 public class RestBlogController {
     @Autowired
-    private IBlogRepository blogRepository;
+    private IBlogService blogService;
     @Autowired
     private IAuthorRepository authorRepository;
 
     @GetMapping("")
     public ResponseEntity<List<Blog>> getBlog() {
-        List<Blog> blogs = blogRepository.findAll();
+        List<Blog> blogs = blogService.getBlog();
         if (blogs.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);//204
         }
@@ -32,17 +33,21 @@ public class RestBlogController {
 
         @PostMapping("")
         public ResponseEntity<?> create(@RequestBody BlogDto blogDto) {
-            Author author = authorRepository.findAuthorsById(blogDto.getIdAuthor().getId());
-            if (author == null) {
-                author = new Author();
-                author.setNameAuthor(blogDto.getNameAuthor());
-                author.setBirthDate(blogDto.getIdAuthor().getBirthDate());
-                author = authorRepository.saveAndFlush(author);
-            }
-            Blog blog = new Blog();
-            BeanUtils.copyProperties(blogDto,blog,"idAuthor");
-            blog.setIdAuthor(author);
-            blogRepository.save(blog);
+//            Author author = authorRepository.findAuthorsById(blogDto.getIdAuthor().getId());
+//            if (author == null) {
+//                author = new Author();
+//                author.setNameAuthor(blogDto.getIdAuthor().getNameAuthor());
+//                author.setBirthDate(blogDto.getIdAuthor().getBirthDate());
+//                author = authorRepository.saveAndFlush(author);
+//            }
+//            Blog blog = new Blog();
+//            blog.setCode(blogDto.getCode());
+//            blog.setNameBlog(blogDto.getNameBlog());
+//            blog.setGenre(blogDto.getGenre());
+//            blog.setQuantity(blogDto.getQuantity());
+//            blog.setIdAuthor(author);
+//            blogRepository.save(blog);
+            blogService.addBlog(blogDto);
             return new ResponseEntity<>("Thêm Mới Thành Công",HttpStatus.CREATED);
         }
 }
