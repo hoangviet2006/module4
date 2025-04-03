@@ -14,4 +14,26 @@ public class AuthorService implements IAuthorService{
     public List<Author> findAlLAuthor() {
         return authorRepository.findAll();
     }
+
+    @Override
+    public Author findById(int id) {
+        return authorRepository.findById(id);
+    }
+
+    @Override
+    public Author  findByNameFalse(String name) {
+        return authorRepository.findByNameAuthorContainingIgnoreCase(name);
+    }
+
+    @Override
+    public void addAuthor(Author author) {
+        authorRepository.save(author);
+    }
+
+    @Override
+    public List<Author> findByName(String name) {
+        return authorRepository.findByNameAuthor(name);
+    }
+
+
 }

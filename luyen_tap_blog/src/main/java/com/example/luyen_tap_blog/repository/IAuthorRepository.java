@@ -9,4 +9,9 @@ import java.util.List;
 @Repository
 public interface IAuthorRepository extends JpaRepository<Author,Integer> {
     List<Author> findAll();
+    Author findById(int id);
+    Author findByNameAuthorContainingIgnoreCase(String name);
+    List<Author> findByNameAuthor(String name);
+
+
 }

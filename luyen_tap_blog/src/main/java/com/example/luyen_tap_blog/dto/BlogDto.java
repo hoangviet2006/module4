@@ -1,10 +1,7 @@
-package com.example.blog.dto;
+package com.example.luyen_tap_blog.dto;
 
-import com.example.blog.model.Author;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.luyen_tap_blog.model.Author;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlogDto {
-    private long idBlog;
+    private int idBlog;
     @NotBlank(message = "Mã sách không được để trống")
     private String code;
     @NotBlank(message = "Tên sách không được để trống")

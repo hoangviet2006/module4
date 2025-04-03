@@ -15,11 +15,11 @@ import lombok.Setter;
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column(name = "code" ,unique = true, nullable = false)
     private String code;
     @Column(name = "name" , nullable = false)
-    private String name;
+    private String nameBlog;
     @Column(name = "genre", nullable = false)
     private String genre;
     @Column(name = "quantity", nullable = false)
