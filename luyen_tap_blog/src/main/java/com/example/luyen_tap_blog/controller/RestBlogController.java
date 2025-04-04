@@ -98,7 +98,7 @@ public class RestBlogController {
         return new ResponseEntity<>(authors, HttpStatus.OK);
     }
 
-    @GetMapping("/search/name/{name}")
+    @GetMapping("/search/{name}")
     public ResponseEntity<List<Blog>> getNameBlog(@PathVariable("name") String name) {
         List<Blog> blog = blogService.findByName(name);
         if (blog.isEmpty()) {

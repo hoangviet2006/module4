@@ -1,120 +1,167 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css"/>
-        <script src="jquery-3.6.0.min.js"></script>
-    </head>
-    <body>
-    <button class="btn btn-danger" data-bs-toggle="modal"
-            data-bs-target="#addModal">Thêm Mới</button>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Code</th>
-            <th>Thể loại</th>
-            <th>Tên tác phẩm</th>
-            <th>So luong</th>
-            <th>Chỉnh Sửa</th>
-            <th>Xóa</th>
-        </tr>
-        <tbody id="body">
-        </tbody>
-    </table>
-    <p id="input"></p>
-    <script>
-        $(document).ready(function () {
-            display();
-            $("#add").click(add);
-            author();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css"/>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<button class="btn btn-danger" data-bs-toggle="modal"
+        data-bs-target="#addModal">Thêm Mới
+</button>
+<div class="d-flex">
+    <input id="nameSearch" class="form-control" placeholder="Nhập tên tác phẩm cần tìm kiếm">
+    <button class="btn btn-danger" onclick="searchBlog($())">Tìm kiếm</button>
+</div>
 
-        });
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Thể loại</th>
+        <th>Tên tác phẩm</th>
+        <th>So luong</th>
+        <th>Chỉnh Sửa</th>
+        <th>Tên Tác Giả</th>
+        <th>Xóa</th>
+    </tr>
+    <tbody id="body">
+    </tbody>
+</table>
+<button class="btn btn-danger" id="more">Load More</button>
+<script>
+    $(document).ready(function () {
+        display();
+        $("#add").click(add);
+        author();
+        $("#more").click(display)
+    });
+    let start = 0;
+    let next = 2;
 
-        function author() {
-            $.ajax({
-                contentType: "application/json",
-                method: "get",
-                url: "http://localhost:8080/api/blogs/author",
-                success: function (data) {
-                    let options = "";
-                    for (let i = 0; i < data.length; i++) {
-                        options += `<option value="${data[i].id}">${data[i].nameAuthor}</option>`
-                    }
-                    $("#idAuthor").html(options)
-                    $("#updateIdAuthor").html(options)
-                }
-            })
+    function loadMore(data = []) {
+        let table = $("#body");
+        let loadMore = data.slice(start, start + next);
+        let loadTable = "";
+        for (let i = 0; i < loadMore.length; i++) {
+            loadTable += ` <tr>
+                                        <td>${loadMore[i].id}</td>
+                                        <td>${loadMore[i].code}</td>
+                                        <td>${loadMore[i].genre}</td>
+                                        <td>${loadMore[i].nameBlog}</td>
+                                        <td>${loadMore[i].quantity}</td>
+                                        <td>${loadMore[i].idAuthor.nameAuthor}</td>
+                                        <td>
+                                        <button class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#updateModal" onclick="dataUpdate(${loadMore[i].id})">
+                                         Chỉnh Sửa</button>
+                                        </td>
+                                        <td>
+                                        <button class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#confirmDeleteModal"
+                                         onclick="setDelete(${loadMore[i].id})">Xóa
+                                        </button>
+                                        </td>
+                                  </tr>`
         }
+        table.append(loadTable);
+        start += loadMore.length;
+        // Kiểm tra nếu đã tải hết dữ liệu, ẩn nút "More"
+        if (start >= data.length) {
+            $("#more").prop("disabled", true).text("Hết dữ liệu");
+        }
+    }
 
-        function add() {
-            let code = $("#code").val();
-            let nameBlog = $("#nameBlog").val();
-            let genre = $("#genre").val();
-            let quantity = $("#quantity").val();
-            let id = $("#idAuthor").val();
-            let Blog = {
-                code: code,
-                nameBlog: nameBlog,
-                genre: genre,
-                quantity: quantity,
-                idAuthor: {
-                    id: id
+    function author() {
+        $.ajax({
+            contentType: "application/json",
+            method: "get",
+            url: "http://localhost:8080/api/blogs/author",
+            success: function (data) {
+                let options = "";
+                for (let i = 0; i < data.length; i++) {
+                    options += `<option value="${data[i].id}">${data[i].nameAuthor}</option>`
                 }
+                $("#idAuthor").html(options)
+                $("#updateIdAuthor").html(options)
             }
-            console.log(Blog);
-            $.ajax({
-                contentType: "application/json",
-                method: "post",
-                data: JSON.stringify(Blog),
-                url: "http://localhost:8080/api/blogs",
-                complete: function (data) {
-                    display();
-                    $('#addModal').modal('hide');
-                }
-            });
-        }
+        })
+    }
 
-        function deleted(id) {
-            $.ajax({
-                contentType: "application/json",
-                method: "delete",
-                url: `http://localhost:8080/api/blogs/${id}`,
-                complete: function () {
-                    display()
-                }
-            });
+    function add() {
+        let code = $("#code").val();
+        let nameBlog = $("#nameBlog").val();
+        let genre = $("#genre").val();
+        let quantity = $("#quantity").val();
+        let id = $("#idAuthor").val();
+        let Blog = {
+            code: code,
+            nameBlog: nameBlog,
+            genre: genre,
+            quantity: quantity,
+            idAuthor: {
+                id: id
+            }
         }
+        console.log(Blog);
+        $.ajax({
+            contentType: "application/json",
+            method: "post",
+            data: JSON.stringify(Blog),
+            url: "http://localhost:8080/api/blogs",
+            complete: function (data) {
+                display();
+                $('#addModal').modal('hide');
+            }
+        });
+    }
 
-        function setDelete(id) {
-            document.getElementById("deleteId").value = id;
+    function deleted(id) {
+        $.ajax({
+            contentType: "application/json",
+            method: "delete",
+            url: `http://localhost:8080/api/blogs/${id}`,
+            complete: function () {
+                display();
+            }
+        });
+    }
+
+    function setDelete(id) {
+        document.getElementById("deleteId").value = id;
+    }
+
+    function confirmDelete() {
+        let id = document.getElementById("deleteId").value;
+        deleted(id);
+        $("#confirmDeleteModal").modal("hide");
+    }
+
+    function searchBlog() {
+        let name = $("#nameSearch").val();
+        if (name === "") {
+            display();
         }
-
-        function confirmDelete() {
-            let id = document.getElementById("deleteId").value;
-            deleted(id);
-            $("#confirmDeleteModal").modal("hide");
-        }
-
-        function display() {
-            $.ajax({
-                contentType: "application/json",
-                method: "Get",
-                url: "http://localhost:8080/api/blogs",
-                success: function (data) {
-                    let table = "";
-                    for (let i = 0; i < data.length; i++) {
-                        table += ` <tr>
+        $.ajax({
+            contentType: "application/json",
+            method: "Get",
+            url: `http://localhost:8080/api/blogs/search/${name}`,
+            success: function (data) {
+                let table = "";
+                for (let i = 0; i < data.length; i++) {
+                    table += ` <tr>
                                         <td>${data[i].id}</td>
                                         <td>${data[i].code}</td>
                                         <td>${data[i].genre}</td>
                                         <td>${data[i].nameBlog}</td>
                                         <td>${data[i].quantity}</td>
+                                        <td>${data[i].idAuthor.nameAuthor}</td>
                                         <td>
                                         <button class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#updateModal" onclick="dataUpdate(${data[i].id})">
@@ -127,157 +174,191 @@
                                         </button>
                                         </td>
                                   </tr>`
-                    }
-                    $("#body").html(table);
                 }
-            });
-
-        }
-
-        function dataUpdate(id) {
-            $.ajax({
-                contentType: "application/json",
-                method: "get",
-                url: `http://localhost:8080/api/blogs/${id}`,
-                success: function (data) {
-                    console.log(data)
-                    $("#id").val(data.id);
-                    $("#updateCode").val(data.code);
-                    $("#updateGenre").val(data.genre);
-                    $("#updateIdAuthor").val(data.idAuthor.id);
-                    $("#updateNameBlog").val(data.nameBlog);
-                    $("#updateQuantity").val(data.quantity);
-                }
-            })
-        }
-
-        function update() {
-            let idBlog = $("#id").val();
-            let code = $("#code").val();
-            let nameBlog = $("#nameBlog").val();
-            let genre = $("#genre").val();
-            let quantity = $("#quantity").val();
-            let id = $("#idAuthor").val();
-            let Blog = {
-                id: idBlog,
-                code: code,
-                nameBlog: nameBlog,
-                genre: genre,
-                quantity: quantity,
-                idAuthor: {
-                    id: id
-                }
+                $("#body").html(table);
             }
-            $.ajax({
-                contentType: "application/json",
-                method: "put",
-                data: JSON.stringify(Blog),
-                url: `http://localhost:8080/api/blogs/${id}`,
-                success: function () {
-                    $('#updateModal').modal('hide');
-                }
-            })
+        });
+    }
+
+    function display() {
+        $.ajax({
+            contentType: "application/json",
+            method: "Get",
+            url: "http://localhost:8080/api/blogs",
+            success: function (data) {
+                // let table = "";
+                // for (let i = 0; i < data.length; i++) {
+                //     table += ` <tr>
+                //                         <td>${data[i].id}</td>
+                //                         <td>${data[i].code}</td>
+                //                         <td>${data[i].genre}</td>
+                //                         <td>${data[i].nameBlog}</td>
+                //                         <td>${data[i].quantity}</td>
+                //                         <td>${data[i].idAuthor.nameAuthor}</td>
+                //                         <td>
+                //                         <button class="btn btn-danger" data-bs-toggle="modal"
+                //                         data-bs-target="#updateModal" onclick="dataUpdate(${data[i].id})">
+                //                          Chỉnh Sửa</button>
+                //                         </td>
+                //                         <td>
+                //                         <button class="btn btn-danger" data-bs-toggle="modal"
+                //                         data-bs-target="#confirmDeleteModal"
+                //                          onclick="setDelete(${data[i].id})">Xóa
+                //                         </button>
+                //                         </td>
+                //                   </tr>`
+                // }
+                // $("#body").html(table);
+                loadMore(data)
+            }
+        });
+    }
+
+    function dataUpdate(id) {
+        $.ajax({
+            contentType: "application/json",
+            method: "get",
+            url: `http://localhost:8080/api/blogs/${id}`,
+            success: function (data) {
+                $("#id").val(data.id);
+                $("#updateCode").val(data.code);
+                $("#updateGenre").val(data.genre);
+                $("#updateIdAuthor").val(data.idAuthor.id);
+                $("#updateNameBlog").val(data.nameBlog);
+                $("#updateQuantity").val(data.quantity);
+            }
+        })
+    }
+
+    function update() {
+        let idBlog = $("#id").val();
+        let code = $("#updateCode").val();
+        let nameBlog = $("#updateNameBlog").val();
+        let genre = $("#updateGenre").val();
+        let quantity = $("#updateQuantity").val();
+        let id = $("#updateIdAuthor").val();
+        let Blog = {
+            id: idBlog,
+            code: code,
+            nameBlog: nameBlog,
+            genre: genre,
+            quantity: quantity,
+            idAuthor: {
+                id: id
+            }
         }
-    </script>
-    </body>
-    <!-- Modal Thêm mới-->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Thêm Sách Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formAdd">
-                        <div class="mb-3">
-                            <label for="code" class="form-label">Mã Sách</label>
-                            <input type="text" id="code" class="form-control" placeholder="Nhập Mã Sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="nameBlog" class="form-label">Tên Sách</label>
-                            <input type="text" id="nameBlog" class="form-control" placeholder="Nhập tên sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="genre" class="form-label">Thể Loại</label>
-                            <input type="text" id="genre" class="form-control" placeholder="Nhập thể loại sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="quantity" class="form-label">Số Lượng</label>
-                            <input type="number" id="quantity" class="form-control" placeholder="Nhập số lượng">
-                        </div>
-                        <div class="mb-3">
-                            <label for="idAuthor" class="form-label">Tác Giả</label>
-                            <select id="idAuthor" class="form-select"></select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="add()" id="add">Lưu</button>
-                </div>
+        console.log("Dữ liệu gửi đi:", Blog);
+        $.ajax({
+            contentType: "application/json",
+            method: "put",
+            data: JSON.stringify(Blog),
+            url: `http://localhost:8080/api/blogs/${idBlog}`,
+            success: function () {
+                display();
+                $('#updateModal').modal('hide');
+            }
+        })
+    }
+</script>
+</body>
+<!-- Modal Thêm mới-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Thêm Sách Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-    </div>
-    <!-- Modal Update-->
-    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateModalLabel">Chỉnh Sửa Sách</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formUpdate">
-                        <input type="hidden" id="id">
-                        <div class="mb-3">
-                            <label for="updateCode" class="form-label">Mã Sách</label>
-                            <input type="text" id="updateCode" class="form-control" placeholder="Nhập Mã Sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="updateNameBlog" class="form-label">Tên Sách</label>
-                            <input type="text" id="updateNameBlog" class="form-control" placeholder="Nhập tên sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="updateGenre" class="form-label">Thể Loại</label>
-                            <input type="text" id="updateGenre" class="form-control" placeholder="Nhập thể loại sách">
-                        </div>
-                        <div class="mb-3">
-                            <label for="updateQuantity" class="form-label">Số Lượng</label>
-                            <input type="number" id="updateQuantity" class="form-control" placeholder="Nhập số lượng">
-                        </div>
-                        <div class="mb-3">
-                            <label for="updateIdAuthor" class="form-label">Tác Giả</label>
-                            <select id="updateIdAuthor" class="form-select"></select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" onclick="update()">Lưu Thay Đổi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Xác Nhận Xóa -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="/blog/delete" method="get">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title" id="confirmDeleteLabel">Xác Nhận Xóa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <form id="formAdd">
+                    <div class="mb-3">
+                        <label for="code" class="form-label">Mã Sách</label>
+                        <input type="text" id="code" class="form-control" placeholder="Nhập Mã Sách">
                     </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="deleteId">
-                        <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+                    <div class="mb-3">
+                        <label for="nameBlog" class="form-label">Tên Sách</label>
+                        <input type="text" id="nameBlog" class="form-control" placeholder="Nhập tên sách">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="button" onclick="confirmDelete()" class="btn btn-danger">Xóa</button>
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Thể Loại</label>
+                        <input type="text" id="genre" class="form-control" placeholder="Nhập thể loại sách">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Số Lượng</label>
+                        <input type="number" id="quantity" class="form-control" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="mb-3">
+                        <label for="idAuthor" class="form-label">Tác Giả</label>
+                        <select id="idAuthor" class="form-select"></select>
                     </div>
                 </form>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="add()" id="add">Lưu</button>
+            </div>
         </div>
     </div>
-    </html>
+</div>
+<!-- Modal Update-->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Chỉnh Sửa Sách</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formUpdate">
+                    <input type="hidden" id="id">
+                    <div class="mb-3">
+                        <label for="updateCode" class="form-label">Mã Sách</label>
+                        <input type="text" id="updateCode" class="form-control" placeholder="Nhập Mã Sách">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateNameBlog" class="form-label">Tên Sách</label>
+                        <input type="text" id="updateNameBlog" class="form-control" placeholder="Nhập tên sách">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateGenre" class="form-label">Thể Loại</label>
+                        <input type="text" id="updateGenre" class="form-control" placeholder="Nhập thể loại sách">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateQuantity" class="form-label">Số Lượng</label>
+                        <input type="number" id="updateQuantity" class="form-control" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateIdAuthor" class="form-label">Tác Giả</label>
+                        <select id="updateIdAuthor" class="form-select"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Lưu Thay Đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Xác Nhận Xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/blog/delete" method="get">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="confirmDeleteLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="deleteId">
+                    <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" onclick="confirmDelete()" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

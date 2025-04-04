@@ -13,6 +13,5 @@ public interface IBlogRepository extends JpaRepository<Blog,Integer> {
     Blog findBlogById(long id);
     List<Blog> findByDeletedFalse();
     Page<Blog> findByNameBlogContainingIgnoreCaseAndDeletedFalse(String name, Pageable pageable);
-
-    List<Blog> findByNameBlog(String nameBlog);
+    List<Blog> findByNameBlogContainingIgnoreCaseAndDeletedFalse(String name);
 }

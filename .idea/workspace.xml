@@ -1,4 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PropertiesComponent">{}</component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dcd0234e-60ea-44a8-a3ce-117e881c38c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/java/com/example/spring_internationalize/config/AppConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/java/com/example/spring_internationalize/config/AppInit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/java/com/example/spring_internationalize/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/java/com/example/spring_internationalize/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/resources/hawai.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/resources/message.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thuc_hanh_web_i18n/spring_internationalize/src/main/webapp/WEB-INF/views/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jquery-ajax/bai_tap_blog.html" beforeDir="false" afterPath="$PROJECT_DIR$/jquery-ajax/bai_tap_blog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/controller/RestBlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/controller/RestBlogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/repository/IBlogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/repository/IBlogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/service/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/luyen_tap_blog/src/main/java/com/example/luyen_tap_blog/service/BlogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/luyen_tap_blog/src/main/resources/templates/views/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/luyen_tap_blog/src/main/resources/templates/views/list.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2vDAbjPYIif6W2owpAM1sG9XBag" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.bai_tap_blog.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;disable.download.node.interpreter.editor.notification&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/codegym/module4/jquery-ajax&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\codegym\module4\jquery-ajax" />
+      <recent name="D:\codegym\module4" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\codegym\module4\jquery-ajax" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23726.96" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dcd0234e-60ea-44a8-a3ce-117e881c38c9" name="Changes" comment="" />
+      <created>1743669343701</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743669343701</updated>
+      <workItem from="1743669344795" duration="5976000" />
+      <workItem from="1743685279105" duration="1356000" />
+      <workItem from="1743733441298" duration="3802000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
 </project>

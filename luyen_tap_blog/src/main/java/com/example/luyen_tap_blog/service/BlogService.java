@@ -71,6 +71,6 @@ public class BlogService implements IBlogService {
 
     @Override
     public List<Blog> findByName(String name) {
-        return blogRepository.findByNameBlog(name);
+        return blogRepository.findByNameBlogContainingIgnoreCaseAndDeletedFalse(name);
     }
 }
